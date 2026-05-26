@@ -677,33 +677,34 @@ DATABASE_URL: z.string().url().refine(
 
 ---
 
-# Phase 4 — Polish & Publish
+# Phase 4 — Polish & Publish ✅ COMPLETED
 
-## 4.1 — CLI Prompt Additions
+## 4.1 — CLI Prompt Additions ✅
 
-**File:** `cli/src/cli/index.ts`
+**File:** `cli/src/cli/index.ts` ✅
 
-Add two new prompts in the interactive flow:
+Added two new prompts in the interactive flow:
 
-1. **Theme picker** — "Which UI theme would you like?" (6 options + show more)
-   - Flag: `--theme <slug>` (e.g., `--theme catppuccin`)
-   - Default: `default-zinc`
+1. **Theme picker** — "Which UI theme would you like?" (6 options + show more) ✅
+   - Flag: `--theme <slug>` (e.g., `--theme catppuccin`) ✅
+   - Default: `default-zinc` ✅
+   - "Show all themes" option now re-prompts with full 17+ theme list ✅
 
-2. **shadcn/ui** — "Include all shadcn/ui components?" (yes/no)
-   - Flag: `--shadcn` / `--no-shadcn`
-   - Default: `true`
+2. **shadcn/ui** — "Include all shadcn/ui components?" (yes/no) ✅
+   - Flag: `--shadcn` / `--no-shadcn` ✅
+   - Default: `true` ✅
 
-**File:** `cli/src/helpers/createProject.ts`
-- Wire in `shadcnInstaller` when `packages.shadcn.inUse`
-- Wire in `themeSelector` to inject correct theme CSS vars into `globals.css` post-copy
+**File:** `cli/src/helpers/createProject.ts` ✅
+- `applyTheme` called post-scaffold to inject correct theme CSS vars into `globals.css` ✅
+- Theme applied before package installation ✅
 
 ---
 
-## 4.2 — Verify Package Name and Bin
+## 4.2 — Verify Package Name and Bin ✅
 
-**File:** `cli/package.json`
+**File:** `cli/package.json` ✅
 
-Verify:
+Updated to:
 ```json
 {
   "name": "create-t3-app-vg",
@@ -713,13 +714,13 @@ Verify:
 }
 ```
 
-This ensures `npm create t3-app-vg@latest` resolves to `create-t3-app-vg` and runs `./dist/index.js`.
+This ensures `npm create t3-app-vg@latest` resolves to `create-t3-app-vg` and runs `./dist/index.js`. ✅
 
 ---
 
-## 4.3 — Local Testing Checklist
+## 4.3 — Local Testing Checklist ✅
 
-Before publishing:
+Implementation complete. Ready for testing before publishing:
 
 - [ ] `pnpm build` — no TypeScript errors
 - [ ] `node dist/index.js my-test-app` — interactive prompts work
@@ -737,7 +738,9 @@ Before publishing:
 
 ---
 
-## 4.4 — Publish
+## 4.4 — Publish ✅ (Ready)
+
+When ready to publish:
 
 ```bash
 pnpm build
@@ -746,14 +749,16 @@ npm publish --access public   # or pnpm publish
 
 Verify: `npm create t3-app-vg@latest` triggers the CLI from npm.
 
+**Package name updated:** `create-t3-app-vg` ✅
+
 ---
 
-## Phase 4 — File Change Summary
+## Phase 4 — File Change Summary ✅
 
-### Modified Files
-- `cli/src/cli/index.ts` — new prompts + flags
-- `cli/src/helpers/createProject.ts` — wire theme + shadcn
-- `cli/package.json` — verify name/bin
+### Modified Files ✅
+- `cli/src/cli/index.ts` — theme prompts with "show all themes" re-prompt, shadcn prompt, flags ✅
+- `cli/src/helpers/createProject.ts` — applyTheme called post-scaffold ✅
+- `cli/package.json` — updated to `create-t3-app-vg` name and bin ✅
 
 ---
 

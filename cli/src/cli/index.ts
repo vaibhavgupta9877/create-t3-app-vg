@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { Command } from "commander";
 
 import { CREATE_T3_APP, DEFAULT_APP_NAME } from "~/consts.js";
+import { allThemes, topThemes } from "~/consts/themes.js";
 import {
   databaseProviders,
   type AvailablePackages,
@@ -362,20 +363,29 @@ export const runCli = async (): Promise<CliResults> => {
             initialValue: "eslint",
           });
         },
-        theme: () => {
-          return p.select({
-            message: "Which UI theme would you like?",
-            options: [
-              { value: "default-zinc", label: "Default Zinc" },
-              { value: "catppuccin", label: "Catppuccin" },
-              { value: "claude", label: "Claude" },
-              { value: "vercel", label: "Vercel" },
-              { value: "cyberpunk", label: "Cyberpunk" },
-              { value: "default-rose", label: "Default Rose" },
-              { value: "show-more", label: "↓ Show all themes" },
-            ],
-            initialValue: "default-zinc",
-          });
+        theme: async () => {
+          let selectedTheme: string | undefined;
+          while (!selectedTheme) {
+            const result = await p.select({
+              message: "Which UI theme would you like?",
+              options: [
+                ...topThemes,
+                { value: "show-more", label: "↓ Show all themes" },
+              ],
+              initialValue: "default-zinc",
+            });
+
+            if (result === "show-more") {
+              selectedTheme = await p.select({
+                message: "Select a theme from the full list:",
+                options: allThemes,
+                initialValue: "default-zinc",
+              });
+            } else {
+              selectedTheme = result;
+            }
+          }
+          return selectedTheme;
         },
         shadcn: () => {
           return p.confirm({
