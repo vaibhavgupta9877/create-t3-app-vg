@@ -39,7 +39,7 @@ const main = async () => {
   const {
     appName,
     packages,
-    flags: { noGit, noInstall, importAlias, appRouter },
+    flags: { noGit, noInstall, importAlias, appRouter, theme },
     databaseProvider,
   } = await runCli();
 
@@ -56,6 +56,7 @@ const main = async () => {
     importAlias,
     noInstall,
     appRouter,
+    theme,
   });
 
   // Write name to package.json

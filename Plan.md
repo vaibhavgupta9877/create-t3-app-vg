@@ -24,9 +24,9 @@ Running `npm create t3-app-vg@latest` produces a Next.js app that is:
 
 ---
 
-# Phase 1 — Foundation & Theming
+# Phase 1 — Foundation & Theming ✅ COMPLETED
 
-## 1.1 — Redesign `globals.css` with Full CSS Variable Theme
+## 1.1 — Redesign `globals.css` with Full CSS Variable Theme ✅
 
 **File:** `cli/template/extras/src/styles/globals.css`
 
@@ -128,9 +128,9 @@ The above is the **default/zinc** theme (applied when no tweakcn theme is select
 
 ---
 
-## 1.2 — tweakcn Theme Picker in CLI
+## 1.2 — tweakcn Theme Picker in CLI ✅
 
-### Theme Options
+### Theme Options ✅
 
 The CLI will prompt: **"Which UI theme would you like?"**
 
@@ -190,9 +190,9 @@ async function fetchTweakcnTheme(slug: string): Promise<ThemeVars>
 
 ---
 
-## 1.3 — Add shadcn/ui Installer
+## 1.3 — Add shadcn/ui Installer ✅
 
-**New file:** `cli/src/installers/shadcn.ts`
+**New file:** `cli/src/installers/shadcn.ts` ✅
 
 Responsibilities:
 - Add these dependencies to the generated project's `package.json`:
@@ -244,9 +244,13 @@ accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 
 ---
 
-## 1.4 — Rewrite Boilerplate Pages to Use Theme Classes
+## 1.4 — Rewrite Boilerplate Pages to Use Theme Classes ✅
 
 Remove all inline styles from every page/layout variant and replace with Tailwind classes that resolve through `globals.css` CSS variables.
+
+**Updated Files:**
+- All `with-tw.tsx` page variants (5 files)
+- Replaced hardcoded colors with CSS variable-based Tailwind classes
 
 **Files to update:**
 

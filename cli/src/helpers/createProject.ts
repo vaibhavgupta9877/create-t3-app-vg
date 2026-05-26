@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { PKG_ROOT } from "~/consts.js";
+import { applyTheme } from "~/helpers/themeSelector.js";
 import { installPackages } from "~/helpers/installPackages.js";
 import { scaffoldProject } from "~/helpers/scaffoldProject.js";
 import {
@@ -24,6 +25,7 @@ interface CreateProjectOptions {
   importAlias: string;
   appRouter: boolean;
   databaseProvider: DatabaseProvider;
+  theme?: string;
 }
 
 export const createProject = async ({
@@ -33,6 +35,7 @@ export const createProject = async ({
   noInstall,
   appRouter,
   databaseProvider,
+  theme = "default-zinc",
 }: CreateProjectOptions) => {
   const pkgManager = getUserPkgManager();
   const projectDir = path.resolve(process.cwd(), projectName);
@@ -47,6 +50,11 @@ export const createProject = async ({
     appRouter,
     databaseProvider,
   });
+
+  // Apply the selected theme to globals.css
+  if (theme) {
+    await applyTheme(projectDir, theme);
+  }
 
   // Install the selected packages
   installPackages({

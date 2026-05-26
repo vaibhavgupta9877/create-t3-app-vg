@@ -20,6 +20,8 @@ interface CliFlags {
   noInstall: boolean;
   default: boolean;
   importAlias: string;
+  theme?: string;
+  shadcn?: boolean;
 
   /** @internal Used in CI. */
   CI: boolean;
@@ -54,7 +56,7 @@ interface CliResults {
 
 const defaultOptions: CliResults = {
   appName: DEFAULT_APP_NAME,
-  packages: ["nextAuth", "prisma", "tailwind", "trpc", "eslint"],
+  packages: ["nextAuth", "prisma", "tailwind", "trpc", "shadcn", "eslint"],
   flags: {
     noGit: false,
     noInstall: false,
@@ -71,6 +73,8 @@ const defaultOptions: CliResults = {
     dbProvider: "sqlite",
     eslint: false,
     biome: false,
+    theme: "default-zinc",
+    shadcn: true,
   },
   databaseProvider: "sqlite",
 };
@@ -168,6 +172,16 @@ export const runCli = async (): Promise<CliResults> => {
     .option(
       "--biome [boolean]",
       "Experimental: Boolean value if we should install biome. Must be used in conjunction with `--CI`.",
+      (value) => !!value && value !== "false"
+    )
+    .option(
+      "--theme [slug]",
+      "Specify a UI theme (e.g., default-zinc, catppuccin, claude, vercel, cyberpunk, default-rose)",
+      "default-zinc"
+    )
+    .option(
+      "--shadcn [boolean]",
+      "Boolean value if we should install shadcn/ui components",
       (value) => !!value && value !== "false"
     )
     /** END CI-FLAGS */
@@ -348,6 +362,27 @@ export const runCli = async (): Promise<CliResults> => {
             initialValue: "eslint",
           });
         },
+        theme: () => {
+          return p.select({
+            message: "Which UI theme would you like?",
+            options: [
+              { value: "default-zinc", label: "Default Zinc" },
+              { value: "catppuccin", label: "Catppuccin" },
+              { value: "claude", label: "Claude" },
+              { value: "vercel", label: "Vercel" },
+              { value: "cyberpunk", label: "Cyberpunk" },
+              { value: "default-rose", label: "Default Rose" },
+              { value: "show-more", label: "↓ Show all themes" },
+            ],
+            initialValue: "default-zinc",
+          });
+        },
+        shadcn: () => {
+          return p.confirm({
+            message: "Would you like to include shadcn/ui components?",
+            initialValue: true,
+          });
+        },
         ...(!cliResults.flags.noGit && {
           git: () => {
             return p.confirm({
@@ -390,6 +425,7 @@ export const runCli = async (): Promise<CliResults> => {
     if (project.authentication === "better-auth") packages.push("betterAuth");
     if (project.database === "prisma") packages.push("prisma");
     if (project.database === "drizzle") packages.push("drizzle");
+    if (project.shadcn) packages.push("shadcn");
     if (project.linter === "eslint") packages.push("eslint");
     if (project.linter === "biome") packages.push("biome");
 
@@ -404,6 +440,8 @@ export const runCli = async (): Promise<CliResults> => {
         noGit: !project.git || cliResults.flags.noGit,
         noInstall: !project.install || cliResults.flags.noInstall,
         importAlias: project.importAlias ?? cliResults.flags.importAlias,
+        theme: project.theme ?? cliResults.flags.theme,
+        shadcn: project.shadcn ?? cliResults.flags.shadcn,
       },
     };
   } catch (err) {
