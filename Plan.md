@@ -294,9 +294,9 @@ Hardcoded hex colors `#2e026d`, `#15162c`, `hsl(280,100%,70%)` etc. → `bg-prim
 
 ---
 
-# Phase 2 — Auth Overhaul
+# Phase 2 — Auth Overhaul ✅ COMPLETED
 
-## 2.1 — NextAuth: Discord → CredentialsProvider
+## 2.1 — NextAuth: Discord → CredentialsProvider ✅
 
 Replace the Discord OAuth provider with email/password `CredentialsProvider` across all NextAuth config variants.
 
@@ -351,7 +351,7 @@ export const authConfig = {
 
 ---
 
-## 2.2 — BetterAuth: GitHub OAuth → emailAndPassword Plugin
+## 2.2 — BetterAuth: GitHub OAuth → emailAndPassword Plugin ✅
 
 **Files to modify:**
 
@@ -378,7 +378,7 @@ BetterAuth handles password hashing internally — no bcrypt needed on this path
 
 ---
 
-## 2.3 — Prisma Schema: Add `password` Field to User
+## 2.3 — Prisma Schema: Add `password` Field to User ✅
 
 **Files to modify:** All `*.prisma` files under `cli/template/extras/prisma/schema/`
 
@@ -398,7 +398,7 @@ model User {
 
 ---
 
-## 2.4 — Auth Sign-In / Sign-Up Page Templates
+## 2.4 — Auth Sign-In / Sign-Up Page Templates ✅
 
 Add minimal auth page boilerplate that uses shadcn/ui components and the CSS variable theme:
 
@@ -408,7 +408,7 @@ Add minimal auth page boilerplate that uses shadcn/ui components and the CSS var
 
 ---
 
-## 2.5 — Environment Variable Cleanup
+## 2.5 — Environment Variable Cleanup ✅
 
 **`cli/src/installers/nextAuth.ts`:**
 - Remove `AUTH_DISCORD_ID` and `AUTH_DISCORD_SECRET`

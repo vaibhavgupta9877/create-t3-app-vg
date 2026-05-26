@@ -10,7 +10,7 @@ export const nextAuthInstaller: Installer = ({ projectDir, packages }) => {
   const usingPrisma = packages?.prisma.inUse;
   const usingDrizzle = packages?.drizzle.inUse;
 
-  const deps: AvailableDependencies[] = ["next-auth"];
+  const deps: AvailableDependencies[] = ["next-auth", "bcryptjs"];
   if (usingPrisma) deps.push("@auth/prisma-adapter");
   if (usingDrizzle) deps.push("@auth/drizzle-adapter");
 
