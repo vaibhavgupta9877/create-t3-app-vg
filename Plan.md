@@ -449,7 +449,7 @@ Add minimal auth page boilerplate that uses shadcn/ui components and the CSS var
 
 ---
 
-# Phase 3 — Security Hardening
+# Phase 3 — Security Hardening ✅ COMPLETED
 
 ## Security Audit Summary
 
@@ -468,7 +468,7 @@ The generated templates use solid library choices (NextAuth, BetterAuth, Prisma,
 
 ---
 
-## 3.1 — Security Headers in `next.config.js`
+## 3.1 — Security Headers in `next.config.js` ✅
 
 **Files to modify:**
 - `cli/template/base/next.config.js`
@@ -513,7 +513,7 @@ const config = {
 
 ---
 
-## 3.2 — Harden NextAuth Session & Cookie Config
+## 3.2 — Harden NextAuth Session & Cookie Config ✅
 
 **File:** `cli/template/extras/src/server/auth/config/base.ts`
 
@@ -542,7 +542,7 @@ cookies: {
 
 ---
 
-## 3.3 — Gate Console Logging to Development
+## 3.3 — Gate Console Logging to Development ✅
 
 **Files:** All tRPC router files that include timing middleware:
 - `cli/template/extras/src/server/api/trpc-app.ts` (or similar)
@@ -560,7 +560,7 @@ if (process.env.NODE_ENV === "development") {
 
 ---
 
-## 3.4 — Rate Limiting Middleware Template
+## 3.4 — Rate Limiting Middleware Template ✅
 
 Add a commented-out but ready-to-use rate limiting setup to every generated project.
 
@@ -593,7 +593,7 @@ Add usage example as a comment in the tRPC `protectedProcedure` middleware.
 
 ---
 
-## 3.5 — Strengthen Input Validation in tRPC Routers
+## 3.5 — Strengthen Input Validation in tRPC Routers ✅
 
 **Files:** All router template files under `cli/template/extras/src/server/api/routers/`
 
@@ -619,7 +619,7 @@ Also add a `bodyParser` size limit comment in `next.config.js`:
 
 ---
 
-## 3.6 — Database Connection Hardening
+## 3.6 — Database Connection Hardening ✅
 
 **Files:** `cli/template/extras/src/server/db/db-prisma.ts` (and Drizzle variant)
 
@@ -639,7 +639,7 @@ Add a comment in generated `.env.example`:
 
 ---
 
-## 3.7 — Strengthen env Variable Validation
+## 3.7 — Strengthen env Variable Validation ✅
 
 **Files:** All `cli/template/extras/src/env/*.js` schemas
 
@@ -657,21 +657,21 @@ DATABASE_URL: z.string().url().refine(
 
 ---
 
-## Phase 3 — File Change Summary
+## Phase 3 — File Change Summary ✅
 
 ### New Files
-- `cli/template/extras/src/lib/ratelimit.ts`
+- `cli/template/extras/src/lib/ratelimit.ts` ✅
 
 ### Modified Files
-- `cli/template/base/next.config.js`
-- `cli/template/extras/config/next-config-appdir.js`
-- `cli/template/extras/src/server/auth/config/base.ts` (session/cookie hardening)
-- All tRPC router/handler files (gate console.log)
-- All tRPC router input schemas (add .max() and .trim())
-- `cli/template/extras/src/server/db/db-prisma.ts`
-- `cli/template/extras/src/server/db/db-drizzle.ts` (similar hardening)
-- All `cli/template/extras/src/env/*.js` (stronger Zod validation)
-- Generated `.env.example` (SSL note, localhost warning)
+- `cli/template/base/next.config.js` ✅
+- `cli/template/extras/config/next-config-appdir.js` ✅
+- `cli/template/extras/src/server/auth/config/base.ts` ✅
+- `cli/template/extras/src/server/api/trpc-app/base.ts` ✅
+- `cli/template/extras/src/server/api/trpc-pages/base.ts` ✅
+- All router files in `cli/template/extras/src/server/api/routers/post/` (base, with-auth, with-auth-prisma, with-prisma, with-drizzle, with-auth-drizzle) ✅
+- `cli/template/extras/src/server/db/db-prisma.ts` ✅
+- `cli/template/extras/src/server/db/db-prisma-planetscale.ts` ✅
+- All `cli/template/extras/src/env/*.js` files ✅
 
 ---
 

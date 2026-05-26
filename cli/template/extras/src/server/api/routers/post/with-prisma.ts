@@ -4,7 +4,15 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
-    .input(z.object({ text: z.string() }))
+    .input(
+      z.object({
+        text: z
+          .string()
+          .min(1, "Text is required")
+          .max(255, "Text must be under 255 characters")
+          .trim(),
+      })
+    )
     .query(({ input }) => {
       return {
         greeting: `Hello ${input.text}`,
@@ -12,7 +20,15 @@ export const postRouter = createTRPCRouter({
     }),
 
   create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(
+      z.object({
+        name: z
+          .string()
+          .min(1, "Name is required")
+          .max(255, "Name must be under 255 characters")
+          .trim(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.post.create({
         data: {

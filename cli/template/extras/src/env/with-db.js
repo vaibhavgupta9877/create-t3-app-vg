@@ -7,7 +7,10 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.string().url().refine(
+      (url) => process.env.NODE_ENV !== "production" || !url.includes("localhost"),
+      "DATABASE_URL should not point to localhost in production"
+    ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
