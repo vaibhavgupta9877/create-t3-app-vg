@@ -11,6 +11,7 @@ export const nextAuthInstaller: Installer = ({ projectDir, packages }) => {
   const usingDrizzle = packages?.drizzle.inUse;
 
   const deps: AvailableDependencies[] = ["next-auth", "bcryptjs"];
+  const devDeps: AvailableDependencies[] = ["@types/bcryptjs"];
   if (usingPrisma) deps.push("@auth/prisma-adapter");
   if (usingDrizzle) deps.push("@auth/drizzle-adapter");
 
@@ -18,6 +19,12 @@ export const nextAuthInstaller: Installer = ({ projectDir, packages }) => {
     projectDir,
     dependencies: deps,
     devMode: false,
+  });
+
+  addPackageDependency({
+    projectDir,
+    dependencies: devDeps,
+    devMode: true,
   });
 
   const extrasDir = path.join(PKG_ROOT, "template/extras");
@@ -44,4 +51,14 @@ export const nextAuthInstaller: Installer = ({ projectDir, packages }) => {
   fs.copySync(apiHandlerSrc, apiHandlerDest);
   fs.copySync(authConfigSrc, authConfigDest);
   fs.copySync(authIndexSrc, authIndexDest);
+
+  // Auth pages under (auth) route group
+  const authPages = [
+    { src: "src/app/(auth)/signin/page.tsx", dest: "src/app/(auth)/signin/page.tsx" },
+    { src: "src/app/(auth)/signup/page.tsx", dest: "src/app/(auth)/signup/page.tsx" },
+    { src: "src/app/(auth)/error/page.tsx", dest: "src/app/(auth)/error/page.tsx" },
+  ];
+  for (const { src, dest } of authPages) {
+    fs.copySync(path.join(extrasDir, src), path.join(projectDir, dest));
+  }
 };

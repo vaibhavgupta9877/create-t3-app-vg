@@ -80,6 +80,21 @@ export const betterAuthInstaller: Installer = ({
   fs.copySync(betterAuthClientSrc, betterAuthClientDest);
   fs.copySync(betterAuthServerSrc, betterAuthServerDest);
 
+  // Auth pages under (auth) route group
+  const authPages = [
+    {
+      src: "src/app/(auth)/signin/page.better-auth.tsx",
+      dest: "src/app/(auth)/signin/page.tsx",
+    },
+    {
+      src: "src/app/(auth)/signup/page.better-auth.tsx",
+      dest: "src/app/(auth)/signup/page.tsx",
+    },
+  ];
+  for (const { src, dest } of authPages) {
+    fs.copySync(path.join(extrasDir, src), path.join(projectDir, dest));
+  }
+
   // Update Better Auth adapter provider according to selected DB
   try {
     if (fs.pathExistsSync(authConfigDest)) {
